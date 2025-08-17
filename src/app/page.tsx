@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import CancellationFlow from './components/CancellationFlow';
 
 // Mock user data for UI display
 const mockUser = {
@@ -27,6 +28,9 @@ export default function ProfilePage() {
   
   // New state for settings toggle
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
+  
+  // New state for cancellation flow
+  const [showCancellationFlow, setShowCancellationFlow] = useState(false);
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
@@ -249,7 +253,7 @@ export default function ProfilePage() {
                     </button>
                     <button
                       onClick={() => {
-                        console.log('Cancel button clicked - no action');
+                        setShowCancellationFlow(true);
                       }}
                       className="inline-flex items-center justify-center w-full px-4 py-3 bg-white border border-red-200 text-red-600 rounded-lg hover:bg-red-50 hover:border-red-300 transition-all duration-200 shadow-sm group"
                     >
@@ -265,6 +269,15 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
+      
+      {/* Cancellation Flow Modal */}
+      {showCancellationFlow && (
+        <CancellationFlow 
+          onClose={() => setShowCancellationFlow(false)}
+          userData={mockUser}
+          subscriptionData={mockSubscriptionData}
+        />
+      )}
     </div>
   );
 }
